@@ -9,9 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LojistaRouteImport } from './routes/lojista'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LojistaLoginRouteImport } from './routes/lojista.login'
+import { Route as LojistaAuthRouteImport } from './routes/lojista._auth'
 import { Route as AdminUsuariosRouteImport } from './routes/_admin.usuarios'
 import { Route as AdminRestaurantesRouteImport } from './routes/_admin.restaurantes'
 import { Route as AdminPedidosRouteImport } from './routes/_admin.pedidos'
@@ -19,7 +22,18 @@ import { Route as AdminFinanceiroRouteImport } from './routes/_admin.financeiro'
 import { Route as AdminEntregasRouteImport } from './routes/_admin.entregas'
 import { Route as AdminDashboardRouteImport } from './routes/_admin.dashboard'
 import { Route as AdminCardapioRouteImport } from './routes/_admin.cardapio'
+import { Route as LojistaAuthPedidosRouteImport } from './routes/lojista._auth.pedidos'
+import { Route as LojistaAuthMinhaLojaRouteImport } from './routes/lojista._auth.minha-loja'
+import { Route as LojistaAuthFinanceiroRouteImport } from './routes/lojista._auth.financeiro'
+import { Route as LojistaAuthDashboardRouteImport } from './routes/lojista._auth.dashboard'
+import { Route as LojistaAuthCardapioRouteImport } from './routes/lojista._auth.cardapio'
+import { Route as LojistaAuthAvaliacoesRouteImport } from './routes/lojista._auth.avaliacoes'
 
+const LojistaRoute = LojistaRouteImport.update({
+  id: '/lojista',
+  path: '/lojista',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -33,6 +47,15 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LojistaLoginRoute = LojistaLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => LojistaRoute,
+} as any)
+const LojistaAuthRoute = LojistaAuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => LojistaRoute,
 } as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
@@ -69,10 +92,41 @@ const AdminCardapioRoute = AdminCardapioRouteImport.update({
   path: '/cardapio',
   getParentRoute: () => AdminRoute,
 } as any)
+const LojistaAuthPedidosRoute = LojistaAuthPedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
+const LojistaAuthMinhaLojaRoute = LojistaAuthMinhaLojaRouteImport.update({
+  id: '/minha-loja',
+  path: '/minha-loja',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
+const LojistaAuthFinanceiroRoute = LojistaAuthFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
+const LojistaAuthDashboardRoute = LojistaAuthDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
+const LojistaAuthCardapioRoute = LojistaAuthCardapioRouteImport.update({
+  id: '/cardapio',
+  path: '/cardapio',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
+const LojistaAuthAvaliacoesRoute = LojistaAuthAvaliacoesRouteImport.update({
+  id: '/avaliacoes',
+  path: '/avaliacoes',
+  getParentRoute: () => LojistaAuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/lojista': typeof LojistaAuthRouteWithChildren
   '/cardapio': typeof AdminCardapioRoute
   '/dashboard': typeof AdminDashboardRoute
   '/entregas': typeof AdminEntregasRoute
@@ -80,10 +134,18 @@ export interface FileRoutesByFullPath {
   '/pedidos': typeof AdminPedidosRoute
   '/restaurantes': typeof AdminRestaurantesRoute
   '/usuarios': typeof AdminUsuariosRoute
+  '/lojista/login': typeof LojistaLoginRoute
+  '/lojista/avaliacoes': typeof LojistaAuthAvaliacoesRoute
+  '/lojista/cardapio': typeof LojistaAuthCardapioRoute
+  '/lojista/dashboard': typeof LojistaAuthDashboardRoute
+  '/lojista/financeiro': typeof LojistaAuthFinanceiroRoute
+  '/lojista/minha-loja': typeof LojistaAuthMinhaLojaRoute
+  '/lojista/pedidos': typeof LojistaAuthPedidosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/lojista': typeof LojistaAuthRouteWithChildren
   '/cardapio': typeof AdminCardapioRoute
   '/dashboard': typeof AdminDashboardRoute
   '/entregas': typeof AdminEntregasRoute
@@ -91,12 +153,20 @@ export interface FileRoutesByTo {
   '/pedidos': typeof AdminPedidosRoute
   '/restaurantes': typeof AdminRestaurantesRoute
   '/usuarios': typeof AdminUsuariosRoute
+  '/lojista/login': typeof LojistaLoginRoute
+  '/lojista/avaliacoes': typeof LojistaAuthAvaliacoesRoute
+  '/lojista/cardapio': typeof LojistaAuthCardapioRoute
+  '/lojista/dashboard': typeof LojistaAuthDashboardRoute
+  '/lojista/financeiro': typeof LojistaAuthFinanceiroRoute
+  '/lojista/minha-loja': typeof LojistaAuthMinhaLojaRoute
+  '/lojista/pedidos': typeof LojistaAuthPedidosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/lojista': typeof LojistaRouteWithChildren
   '/_admin/cardapio': typeof AdminCardapioRoute
   '/_admin/dashboard': typeof AdminDashboardRoute
   '/_admin/entregas': typeof AdminEntregasRoute
@@ -104,12 +174,21 @@ export interface FileRoutesById {
   '/_admin/pedidos': typeof AdminPedidosRoute
   '/_admin/restaurantes': typeof AdminRestaurantesRoute
   '/_admin/usuarios': typeof AdminUsuariosRoute
+  '/lojista/_auth': typeof LojistaAuthRouteWithChildren
+  '/lojista/login': typeof LojistaLoginRoute
+  '/lojista/_auth/avaliacoes': typeof LojistaAuthAvaliacoesRoute
+  '/lojista/_auth/cardapio': typeof LojistaAuthCardapioRoute
+  '/lojista/_auth/dashboard': typeof LojistaAuthDashboardRoute
+  '/lojista/_auth/financeiro': typeof LojistaAuthFinanceiroRoute
+  '/lojista/_auth/minha-loja': typeof LojistaAuthMinhaLojaRoute
+  '/lojista/_auth/pedidos': typeof LojistaAuthPedidosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/login'
+    | '/lojista'
     | '/cardapio'
     | '/dashboard'
     | '/entregas'
@@ -117,10 +196,18 @@ export interface FileRouteTypes {
     | '/pedidos'
     | '/restaurantes'
     | '/usuarios'
+    | '/lojista/login'
+    | '/lojista/avaliacoes'
+    | '/lojista/cardapio'
+    | '/lojista/dashboard'
+    | '/lojista/financeiro'
+    | '/lojista/minha-loja'
+    | '/lojista/pedidos'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
+    | '/lojista'
     | '/cardapio'
     | '/dashboard'
     | '/entregas'
@@ -128,11 +215,19 @@ export interface FileRouteTypes {
     | '/pedidos'
     | '/restaurantes'
     | '/usuarios'
+    | '/lojista/login'
+    | '/lojista/avaliacoes'
+    | '/lojista/cardapio'
+    | '/lojista/dashboard'
+    | '/lojista/financeiro'
+    | '/lojista/minha-loja'
+    | '/lojista/pedidos'
   id:
     | '__root__'
     | '/'
     | '/_admin'
     | '/login'
+    | '/lojista'
     | '/_admin/cardapio'
     | '/_admin/dashboard'
     | '/_admin/entregas'
@@ -140,16 +235,32 @@ export interface FileRouteTypes {
     | '/_admin/pedidos'
     | '/_admin/restaurantes'
     | '/_admin/usuarios'
+    | '/lojista/_auth'
+    | '/lojista/login'
+    | '/lojista/_auth/avaliacoes'
+    | '/lojista/_auth/cardapio'
+    | '/lojista/_auth/dashboard'
+    | '/lojista/_auth/financeiro'
+    | '/lojista/_auth/minha-loja'
+    | '/lojista/_auth/pedidos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   LoginRoute: typeof LoginRoute
+  LojistaRoute: typeof LojistaRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/lojista': {
+      id: '/lojista'
+      path: '/lojista'
+      fullPath: '/lojista'
+      preLoaderRoute: typeof LojistaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -170,6 +281,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/lojista/login': {
+      id: '/lojista/login'
+      path: '/login'
+      fullPath: '/lojista/login'
+      preLoaderRoute: typeof LojistaLoginRouteImport
+      parentRoute: typeof LojistaRoute
+    }
+    '/lojista/_auth': {
+      id: '/lojista/_auth'
+      path: ''
+      fullPath: '/lojista'
+      preLoaderRoute: typeof LojistaAuthRouteImport
+      parentRoute: typeof LojistaRoute
     }
     '/_admin/usuarios': {
       id: '/_admin/usuarios'
@@ -220,6 +345,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCardapioRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/lojista/_auth/pedidos': {
+      id: '/lojista/_auth/pedidos'
+      path: '/pedidos'
+      fullPath: '/lojista/pedidos'
+      preLoaderRoute: typeof LojistaAuthPedidosRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
+    '/lojista/_auth/minha-loja': {
+      id: '/lojista/_auth/minha-loja'
+      path: '/minha-loja'
+      fullPath: '/lojista/minha-loja'
+      preLoaderRoute: typeof LojistaAuthMinhaLojaRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
+    '/lojista/_auth/financeiro': {
+      id: '/lojista/_auth/financeiro'
+      path: '/financeiro'
+      fullPath: '/lojista/financeiro'
+      preLoaderRoute: typeof LojistaAuthFinanceiroRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
+    '/lojista/_auth/dashboard': {
+      id: '/lojista/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/lojista/dashboard'
+      preLoaderRoute: typeof LojistaAuthDashboardRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
+    '/lojista/_auth/cardapio': {
+      id: '/lojista/_auth/cardapio'
+      path: '/cardapio'
+      fullPath: '/lojista/cardapio'
+      preLoaderRoute: typeof LojistaAuthCardapioRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
+    '/lojista/_auth/avaliacoes': {
+      id: '/lojista/_auth/avaliacoes'
+      path: '/avaliacoes'
+      fullPath: '/lojista/avaliacoes'
+      preLoaderRoute: typeof LojistaAuthAvaliacoesRouteImport
+      parentRoute: typeof LojistaAuthRoute
+    }
   }
 }
 
@@ -245,10 +412,46 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface LojistaAuthRouteChildren {
+  LojistaAuthAvaliacoesRoute: typeof LojistaAuthAvaliacoesRoute
+  LojistaAuthCardapioRoute: typeof LojistaAuthCardapioRoute
+  LojistaAuthDashboardRoute: typeof LojistaAuthDashboardRoute
+  LojistaAuthFinanceiroRoute: typeof LojistaAuthFinanceiroRoute
+  LojistaAuthMinhaLojaRoute: typeof LojistaAuthMinhaLojaRoute
+  LojistaAuthPedidosRoute: typeof LojistaAuthPedidosRoute
+}
+
+const LojistaAuthRouteChildren: LojistaAuthRouteChildren = {
+  LojistaAuthAvaliacoesRoute: LojistaAuthAvaliacoesRoute,
+  LojistaAuthCardapioRoute: LojistaAuthCardapioRoute,
+  LojistaAuthDashboardRoute: LojistaAuthDashboardRoute,
+  LojistaAuthFinanceiroRoute: LojistaAuthFinanceiroRoute,
+  LojistaAuthMinhaLojaRoute: LojistaAuthMinhaLojaRoute,
+  LojistaAuthPedidosRoute: LojistaAuthPedidosRoute,
+}
+
+const LojistaAuthRouteWithChildren = LojistaAuthRoute._addFileChildren(
+  LojistaAuthRouteChildren,
+)
+
+interface LojistaRouteChildren {
+  LojistaAuthRoute: typeof LojistaAuthRouteWithChildren
+  LojistaLoginRoute: typeof LojistaLoginRoute
+}
+
+const LojistaRouteChildren: LojistaRouteChildren = {
+  LojistaAuthRoute: LojistaAuthRouteWithChildren,
+  LojistaLoginRoute: LojistaLoginRoute,
+}
+
+const LojistaRouteWithChildren =
+  LojistaRoute._addFileChildren(LojistaRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   LoginRoute: LoginRoute,
+  LojistaRoute: LojistaRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
